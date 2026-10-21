@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+<html lang="kn">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>PM-POSHAN (MDM) Karnataka 2026-27</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+    body { background: #f4f7f6; font-family: 'Noto Sans Kannada', system-ui, sans-serif; }
+
+    .app-header { background: linear-gradient(135deg, #4a148c, #7b1fa2); color: white; padding: 14px; border-bottom: 4px solid #ffca28; }
+
+    .card-custom { border-radius: 12px; border: none; box-shadow: 0 3px 12px rgba(0,0,0,0.08); margin-bottom: 16px; }
+
+    .nav-pills .nav-link.active { background-color: #4a148c; color: #fff; font-weight: 600; }
+
+    .nav-pills .nav-link { color: #4a148c; font-weight: 500; font-size: 0.9rem; }
+
+    .form-label { font-weight: 600; font-size: 0.85rem; color: #333; margin-bottom: 3px; }
+
+    .section-badge { background: #e1bee7; color: #4a148c; font-weight: 700; padding: 5px 12px; border-radius: 6px; font-size: 0.85rem; display: inline-block; margin-bottom: 10px; }
+
+  </style>
+
+</head>
+
+<body>
+
+ 
+
+<div class="app-header text-center">
+
+  <h6 class="mb-0 fw-bold">ಜಿಲ್ಲಾ ಪಂಚಾಯತ್, ಶಾಲಾ ಶಿಕ್ಷಣ ಇಲಾಖೆ</h6>
+
+  <div class="small">ಪ್ರಧಾನ ಮಂತ್ರಿ ಪೋಷನ್ ಶಕ್ತಿ ನಿರ್ಮಾಣ್ ಯೋಜನೆ 2026-27</div>
+
+  <div class="badge bg-warning text-dark mt-1">VALUE & VISION TECH | 96116 63731</div>
+
+</div>
+
+ 
+
+<div class="container py-3" style="max-width: 720px;">
+
+ 
+
+  <!-- AUTH SCREEN -->
+
+  <div id="authScreen" class="card card-custom p-4">
+
+    <ul class="nav nav-pills nav-fill mb-3">
+
+      <li class="nav-item"><button class="nav-link active" onclick="toggleAuth('login')">ಲಾಗಿನ್ (School Login)</button></li>
+
+      <li class="nav-item"><button class="nav-link" onclick="toggleAuth('register')">ಹೊಸ ನೋಂದಣಿ (New Registration)</button></li>
+
+    </ul>
+
+ 
+
+    <div id="loginBox">
+
+      <div class="mb-3">
+
+        <label class="form-label">ಶಾಲೆಯ ಡೈಸ್ ಸಂಖ್ಯೆ (School DISE Code)</label>
+
+        <input type="text" id="loginDise" class="form-control" placeholder="ಉದಾ: 29260300101 (ಅಥವಾ ADMIN)">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label class="form-label">4-ಅಂಕಿಯ ಪಿನ್ (4-Digit PIN)</label>
+
+        <input type="password" id="loginPin" class="form-control" placeholder="****">
+
+      </div>
+
+      <button class="btn btn-primary w-100 fw-bold" style="background:#4a148c;" onclick="doLogin()">ಲಾಗಿನ್ ಮಾಡಿ (Login)</button>
+
+    </div>
+
+ 
+
+    <div id="registerBox" style="display:none;">
+
+      <div class="alert alert-warning small py-2">
+
+        <strong>ಸೂಚನೆ:</strong> ಈ ಸಾಫ್ಟ್‌ವೇರ್ ಬಳಸಲು ನಿಗದಿತ ಸೇವಾ ಶುಲ್ಕವನ್ನು <strong>96116 63731</strong> ಸಂಖ್ಯೆಗೆ ಫೋನ್-ಪೇ/ಗೂಗಲ್-ಪೇ ಮಾಡಿ, ಕೆಳಗಿನ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.
+
+      </div>
+
+      <div class="row g-2">
+
+        <div class="col-6"><label class="form-label">ಡೈಸ್ ಸಂಖ್ಯೆ</label><input type="text" id="regDise" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">4-ಅಂಕಿಯ PIN ಹೊಂದಿಸಿ</label><input type="text" id="regPin" class="form-control" placeholder="ಉದಾ: 1234"></div>
+
+        <div class="col-12"><label class="form-label">ಶಾಲೆಯ ಹೆಸರು</label><input type="text" id="regName" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ವಿಭಾಗ</label>
+
+          <select id="regCat" class="form-select">
+
+            <option value="PRIMARY">ಪ್ರಾಥಮಿಕ ಶಾಲೆ (LKG to 8th)</option>
+
+            <option value="HIGHSCHOOL">ಪ್ರೌಢಶಾಲೆ (8th to 10th)</option>
+
+            <option value="KPS">ಕೆ.ಪಿ.ಎಸ್ ಶಾಲೆ (LKG to 10th)</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-6"><label class="form-label">ತಾಲ್ಲೂಕು</label><input type="text" id="regTaluk" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label><input type="text" id="regPhone" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">UPI Ref / ID</label><input type="text" id="regUpi" class="form-control"></div>
+
+      </div>
+
+      <button class="btn btn-success w-100 fw-bold mt-3" onclick="doRegister()">ನೋಂದಣಿ ಸಲ್ಲಿಸಿ (Submit)</button>
+
+    </div>
+
+  </div>
+
+ 
+
+  <!-- DASHBOARD -->
+
+  <div id="mainApp" style="display:none;">
+
+    <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded shadow-sm mb-3">
+
+      <div>
+
+        <strong id="dispSchoolName" class="text-primary"></strong>
+
+        <div class="small text-muted">DISE: <span id="dispDise"></span> | <span id="dispCat"></span></div>
+
+      </div>
+
+      <button class="btn btn-sm btn-outline-danger" onclick="location.reload()">Logout</button>
+
+    </div>
+
+ 
+
+    <ul class="nav nav-pills nav-fill bg-white p-1 rounded shadow-sm mb-3">
+
+      <li class="nav-item"><button class="nav-link active" onclick="switchTab('tabSB')">1. ದಾಸ್ತಾನು (SB)</button></li>
+
+      <li class="nav-item"><button class="nav-link" onclick="switchTab('tabCB')">2. ನಗದು ವಹಿ (CB)</button></li>
+
+      <li class="nav-item"><button class="nav-link" onclick="switchTab('tabPDF')">3. ವರದಿ ಮುದ್ರಣ (PDF)</button></li>
+
+      <li class="nav-item"><button class="nav-link" onclick="switchTab('tabBasic')">4. ಶಾಲಾ ಮಾಹಿತಿ</button></li>
+
+    </ul>
+
+ 
+
+    <!-- TAB 1: SB -->
+
+    <div id="tabSB" class="card card-custom p-3">
+
+      <span class="section-badge">ದೈನಂದಿನ ಹಾಜರಾತಿ ಮತ್ತು ದಾಸ್ತಾನು (SB Entry)</span>
+
+      <div class="row g-2">
+
+        <div class="col-6">
+
+          <label class="form-label">ತಿಂಗಳು</label>
+
+          <select id="sbMonth" class="form-select">
+
+            <option value="APR">ಏಪ್ರಿಲ್ (APR-SB)</option><option value="MAY">ಮೇ (MAY-SB)</option>
+
+            <option value="JUN">ಜೂನ್ (JUN-SB)</option><option value="JUL">ಜುಲೈ (JUL-SB)</option>
+
+            <option value="AUG">ಆಗಸ್ಟ್ (AUG-SB)</option><option value="SEP">ಸೆಪ್ಟೆಂಬರ್ (SEP-SB)</option>
+
+            <option value="OCT">ಅಕ್ಟೋಬರ್ (OCT-SB)</option><option value="NOV">ನವೆಂಬರ್ (NOV-SB)</option>
+
+            <option value="DEC">ಡಿಸೆಂಬರ್ (DEC-SB)</option><option value="JAN">ಜನವರಿ (JAN-SB)</option>
+
+            <option value="FEB">ಫೆಬ್ರವರಿ (FEB-SB)</option><option value="MAR">ಮಾರ್ಚ್ (MAR-SB)</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-6"><label class="form-label">ಕೆಲಸದ ದಿನ (Day 1–27)</label><input type="number" id="sbSlot" class="form-control" value="1" min="1" max="27"></div>
+
+        <div class="col-6"><label class="form-label">ದಿನಾಂಕ</label><input type="date" id="sbDate" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಕ್ಷೀರಭಾಗ್ಯ ಸಂಖ್ಯೆ</label><input type="number" id="sbMilk" class="form-control" value="0"></div>
+
+        <div class="col-6"><label class="form-label">ದಾಸೋಹ ಹಾಜರಾತಿ (1-5)</label><input type="number" id="sbMdm1" class="form-control" value="0"></div>
+
+        <div class="col-6"><label class="form-label">ದಾಸೋಹ ಹಾಜರಾತಿ (6-8)</label><input type="number" id="sbMdm2" class="form-control" value="0"></div>
+
+ 
+
+        <div class="col-12 mt-2">
+
+          <div class="p-2 bg-light rounded border d-flex justify-content-around">
+
+            <div class="form-check"><input class="form-check-input" type="checkbox" id="sbRagiTick"><label class="form-check-label small fw-bold" for="sbRagiTick">ರಾಗಿ ಮಾಲ್ಟ್</label></div>
+
+            <div class="form-check"><input class="form-check-input" type="checkbox" id="sbApfTick"><label class="form-check-label small fw-bold text-success" for="sbApfTick">APF ಟಿಕ್</label></div>
+
+            <div class="form-check"><input class="form-check-input" type="checkbox" id="sbWheatTick"><label class="form-check-label small fw-bold text-warning" for="sbWheatTick">ಗೋಧಿ ಊಟ</label></div>
+
+          </div>
+
+        </div>
+
+ 
+
+        <div class="col-4"><label class="form-label">ಮೊಟ್ಟೆ</label><input type="number" id="sbEgg" class="form-control" value="0"></div>
+
+        <div class="col-4"><label class="form-label">ಬಾಳೆಹಣ್ಣು</label><input type="number" id="sbBanana" class="form-control" value="0"></div>
+
+        <div class="col-4"><label class="form-label">ಚಿಕ್ಕಿ</label><input type="number" id="sbChikki" class="form-control" value="0"></div>
+
+ 
+
+        <div class="col-12 mt-2">
+
+          <div class="form-check form-switch">
+
+            <input class="form-check-input" type="checkbox" id="toggleSupply" onchange="document.getElementById('supplyBox').style.display = this.checked ? 'block' : 'none'">
+
+            <label class="form-check-label fw-bold text-primary" for="toggleSupply">+ ಆಹಾರ ಧಾನ್ಯ ಸರಬರಾಜು / ಗ್ಯಾಸ್ ವಿವರ</label>
+
+          </div>
+
+        </div>
+
+ 
+
+        <div id="supplyBox" style="display:none;" class="border rounded p-2 bg-light mt-2">
+
+          <div class="row g-2">
+
+            <div class="col-6"><label class="form-label">ಅಕ್ಕಿ (1-5)</label><input type="number" step="0.001" id="supRice1" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಅಕ್ಕಿ (6-8)</label><input type="number" step="0.001" id="supRice2" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಗೋಧಿ (1-5)</label><input type="number" step="0.001" id="supWheat1" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಗೋಧಿ (6-8)</label><input type="number" step="0.001" id="supWheat2" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಬೇಳೆ (1-5)</label><input type="number" step="0.001" id="supDal1" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಬೇಳೆ (6-8)</label><input type="number" step="0.001" id="supDal2" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಎಣ್ಣೆ (1-5)</label><input type="number" step="0.001" id="supOil1" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಎಣ್ಣೆ (6-8)</label><input type="number" step="0.001" id="supOil2" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ಹಾಲಿನ ಪುಡಿ</label><input type="number" step="0.001" id="supMilk" class="form-control"></div>
+
+            <div class="col-6"><label class="form-label">ರಾಗಿ ಮಾಲ್ಟ್</label><input type="number" step="0.001" id="supRagi" class="form-control"></div>
+
+            <div class="col-8"><label class="form-label">ಗ್ಯಾಸ್ ವಿವರ</label><input type="text" id="gasDetails" class="form-control"></div>
+
+            <div class="col-4"><label class="form-label">ಸಿಲಿಂಡರ್ ಸಂಖ್ಯೆ</label><input type="number" id="gasCount" class="form-control"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <button class="btn btn-success w-100 fw-bold mt-3" onclick="submitDailySB()">ದಾಸ್ತಾನು ಉಳಿಸಿ (Save Daily SB)</button>
+
+    </div>
+
+ 
+
+    <!-- TAB 2: CB -->
+
+    <div id="tabCB" class="card card-custom p-3" style="display:none;">
+
+      <span class="section-badge">ನಗದು ವಹಿ ನಿರ್ವಹಣೆ (Cash Book)</span>
+
+      <div class="row g-2">
+
+        <div class="col-6">
+
+          <label class="form-label">ತಿಂಗಳು</label>
+
+          <select id="cbMonth" class="form-select">
+
+            <option value="APR">ಏಪ್ರಿಲ್ (APR-CB)</option><option value="MAY">ಮೇ (MAY-CB)</option>
+
+            <option value="JUN">ಜೂನ್ (JUN-CB)</option><option value="JUL">ಜುಲೈ (JUL-CB)</option>
+
+            <option value="AUG">ಆಗಸ್ಟ್ (AUG-CB)</option><option value="SEP">ಸೆಪ್ಟೆಂಬರ್ (SEP-CB)</option>
+
+            <option value="OCT">ಅಕ್ಟೋಬರ್ (OCT-CB)</option><option value="NOV">ನವೆಂಬರ್ (NOV-CB)</option>
+
+            <option value="DEC">ಡಿಸೆಂಬರ್ (DEC-CB)</option><option value="JAN">ಜನವರಿ (JAN-CB)</option>
+
+            <option value="FEB">ಫೆಬ್ರವರಿ (FEB-CB)</option><option value="MAR">ಮಾರ್ಚ್ (MAR-CB)</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-6">
+
+          <label class="form-label">ನಮೂದು ಪ್ರಕಾರ</label>
+
+          <select id="cbType" class="form-select">
+
+            <option value="CREDIT">ಖಾತೆಗೆ ಜಮಾ (Grant/Interest)</option>
+
+            <option value="EXPENSE">ಇತರೆ ಖರ್ಚು (Other Expense)</option>
+
+            <option value="OPENING_BALANCE">ಪ್ರಾರಂಭಿಕ ಶಿಲ್ಕು (APR-CB Opening)</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-4"><label class="form-label">ಬ್ಲಾಕ್ (1-6)</label><input type="number" id="cbBlock" class="form-control" value="1" min="1" max="6"></div>
+
+        <div class="col-4"><label class="form-label">ದಿನಾಂಕ</label><input type="date" id="cbDate" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ವಿವರ</label><input type="text" id="cbPart" class="form-control" placeholder="ವಿವರ"></div>
+
+ 
+
+        <hr class="my-2">
+
+        <div class="col-6"><label class="form-label">ತರಕಾರಿ+ಸಾಂಬಾರು (1-5)</label><input type="number" step="0.01" id="cbVeg1" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ತರಕಾರಿ+ಸಾಂಬಾರು (6-8)</label><input type="number" step="0.01" id="cbVeg2" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಇಂಧನ</label><input type="number" step="0.01" id="cbFuel" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಬೇಳೆ ಸಾಗಾಣಿಕೆ</label><input type="number" step="0.01" id="cbTrans" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಸಕ್ಕರೆ</label><input type="number" step="0.01" id="cbKsSug" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಕ್ಷೀರ ಇತರೆ</label><input type="number" step="0.01" id="cbKsOth" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಕ್ಷೀರ ಇಂಧನ</label><input type="number" step="0.01" id="cbKsFuel" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಮೊಟ್ಟೆ/ಚಿಕ್ಕಿ (DSE)</label><input type="number" step="0.01" id="cbDse" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಅಜೀಂ ಪ್ರೇಮ್‌ಜಿ (APF)</label><input type="number" step="0.01" id="cbApf" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಇತರೆ ಅನುದಾನ</label><input type="number" step="0.01" id="cbOthG" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಬ್ಯಾಂಕ್ ಬಡ್ಡಿ</label><input type="number" step="0.01" id="cbInt" class="form-control"></div>
+
+        <div class="col-4"><label class="form-label">ಚೀಲ ಮಾರಿದ ಹಣ</label><input type="number" step="0.01" id="cbBag" class="form-control"></div>
+
+      </div>
+
+      <button class="btn btn-primary w-100 fw-bold mt-3" onclick="submitCashBook()">ನಗದು ವಹಿ ಉಳಿಸಿ (Save CB)</button>
+
+    </div>
+
+ 
+
+    <!-- TAB 3: PDF -->
+
+    <div id="tabPDF" class="card card-custom p-3" style="display:none;">
+
+      <span class="section-badge">ಮಾಸಿಕ ವರದಿಗಳ ಮುದ್ರಣ (A4 Landscape PDF)</span>
+
+      <div class="mb-3">
+
+        <label class="form-label">ತಿಂಗಳು ಆಯ್ಕೆ ಮಾಡಿ</label>
+
+        <select id="pdfMonth" class="form-select">
+
+          <option value="APR">ಏಪ್ರಿಲ್ (APRIL)</option><option value="MAY">ಮೇ (MAY)</option>
+
+          <option value="JUN">ಜೂನ್ (JUNE)</option><option value="JUL">ಜುಲೈ (JULY)</option>
+
+          <option value="AUG">ಆಗಸ್ಟ್ (AUGUST)</option><option value="SEP">ಸೆಪ್ಟೆಂಬರ್ (SEPTEMBER)</option>
+
+          <option value="OCT">ಅಕ್ಟೋಬರ್ (OCTOBER)</option><option value="NOV">ನವೆಂಬರ್ (NOVEMBER)</option>
+
+          <option value="DEC">ಡಿಸೆಂಬರ್ (DECEMBER)</option><option value="JAN">ಜನವರಿ (JANUARY)</option>
+
+          <option value="FEB">ಫೆಬ್ರವರಿ (FEBRUARY)</option><option value="MAR">ಮಾರ್ಚ್ (MARCH)</option>
+
+        </select>
+
+      </div>
+
+      <div class="d-grid gap-2">
+
+        <button class="btn btn-outline-primary fw-bold" onclick="downloadReport('SB')">1. ದಾಸ್ತಾನು ವಹಿ (Stock Book - SB PDF)</button>
+
+        <button class="btn btn-outline-success fw-bold" onclick="downloadReport('CG')">2. ಸಾದಿಲ್ವಾರು ವಹಿ (Contingency - CG PDF)</button>
+
+        <button class="btn btn-outline-dark fw-bold" onclick="downloadReport('CB')">3. ನಗದು ಪುಸ್ತಕ (Cash Book - CB PDF)</button>
+
+        <button class="btn btn-outline-warning text-dark fw-bold" onclick="downloadReport('UC')">4. ಉಪಯೋಗಿತ ಪ್ರಮಾಣ ಪತ್ರ (Monthly UC PDF)</button>
+
+        <button class="btn btn-danger fw-bold mt-2" onclick="downloadAnnualUC()">5. ವಾರ್ಷಿಕ ತಃಖ್ತೆ (ANNUAL UC - PDF)</button>
+
+      </div>
+
+    </div>
+
+ 
+
+    <!-- TAB 4: BASIC -->
+
+    <div id="tabBasic" class="card card-custom p-3" style="display:none;">
+
+      <span class="section-badge">ಶಾಲೆಯ ಮೂಲ ಮಾಹಿತಿ (MDM BASIC)</span>
+
+      <div class="row g-2">
+
+        <div class="col-12"><label class="form-label">ಶಾಲೆಯ ಹೆಸರು</label><input type="text" id="b_schoolName" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಕ್ಲಸ್ಟರ್ ಹೆಸರು</label><input type="text" id="b_cluster" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ತಾಲ್ಲೂಕು</label><input type="text" id="b_taluk" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಹೋಬಳಿ</label><input type="text" id="b_hobli" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಡೈಸ್ ಸಂಖ್ಯೆ</label><input type="text" id="b_diseCode" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">1-5 ಮಕ್ಕಳ ಸಂಖ್ಯೆ</label><input type="number" id="b_enrol1to5" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">6-8 ಮಕ್ಕಳ ಸಂಖ್ಯೆ</label><input type="number" id="b_enrol6to8" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಖಾತೆ ಸಂಖ್ಯೆ</label><input type="text" id="b_bankAcc" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">IFSC CODE</label><input type="text" id="b_ifsc" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಬ್ಯಾಂಕ್ & ಬ್ರಾಂಚ್</label><input type="text" id="b_bankBranch" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ರೆಸಿಪಿಯಂಟ್ ಐಡಿ</label><input type="text" id="b_recipientId" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">FSSI ನೋಂದಣಿ</label><input type="text" id="b_fssi" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಸಿ.ಆರ್.ಪಿ ಹೆಸರು & ಫೋನ್</label><input type="text" id="b_crp" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಮುಖ್ಯ ಶಿಕ್ಷಕರು</label><input type="text" id="b_hm" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಉಸ್ತುವಾರಿ ಶಿಕ್ಷಕರು</label><input type="text" id="b_mdmTeacher" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಒಟ್ಟು ಅಡುಗೆ ಸಿಬ್ಬಂದಿ</label><input type="number" id="b_totalCooks" class="form-control"></div>
+
+        <div class="col-6"><label class="form-label">ಮುಖ್ಯ ಅಡುಗೆಯವರು</label><input type="text" id="b_headCook" class="form-control"></div>
+
+      </div>
+
+      <button class="btn btn-primary w-100 fw-bold mt-3" onclick="saveProfile()">ಮಾಹಿತಿ ಉಳಿಸಿ (Save Profile)</button>
+
+    </div>
+
+  </div>
+
+ 
+
+  <!-- ADMIN PANEL -->
+
+  <div id="adminScreen" class="card card-custom p-3" style="display:none;">
+
+    <h6 class="fw-bold text-danger">ADMIN DASHBOARD</h6>
+
+    <div id="adminTableWrap" class="table-responsive small"></div>
+
+  </div>
+
+ 
+
+  <div id="statusToast" class="alert alert-info mt-2 text-center fw-bold" style="display:none;"></div>
+
+ 
+
+</div>
+
+ 
+
+<script>
+
+  // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+
+  const API_URL = "PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE";
+
+ 
+
+  let CURRENT_SCHOOL = null;
+
+ 
+
+  async function apiCall(action, payload) {
+
+    try {
+
+      const res = await fetch(API_URL, {
+
+        method: 'POST',
+
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+
+        body: JSON.stringify({ action: action, payload: payload })
+
+      });
+
+      return await res.json();
+
+    } catch (err) {
+
+      return { success: false, message: 'ಸರ್ವರ್ ಸಂಪರ್ಕ ದೋಷ: ' + err.toString() };
+
+    }
+
+  }
+
+ 
+
+  function showStatus(msg, isError) {
+
+    const el = document.getElementById('statusToast');
+
+    el.style.display = 'block';
+
+    el.className = 'alert mt-2 text-center fw-bold ' + (isError ? 'alert-danger' : 'alert-success');
+
+    el.innerText = msg;
+
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
+
+  }
+
+ 
+
+  function toggleAuth(mode) {
+
+    document.getElementById('loginBox').style.display = (mode === 'login') ? 'block' : 'none';
+
+    document.getElementById('registerBox').style.display = (mode === 'register') ? 'block' : 'none';
+
+  }
+
+ 
+
+  function switchTab(tabId) {
+
+    ['tabSB', 'tabCB', 'tabPDF', 'tabBasic'].forEach(id => {
+
+      document.getElementById(id).style.display = (id === tabId) ? 'block' : 'none';
+
+    });
+
+  }
+
+ 
+
+  async function doRegister() {
+
+    const payload = {
+
+      diseCode: document.getElementById('regDise').value,
+
+      pin: document.getElementById('regPin').value,
+
+      schoolName: document.getElementById('regName').value,
+
+      category: document.getElementById('regCat').value,
+
+      taluk: document.getElementById('regTaluk').value,
+
+      phone: document.getElementById('regPhone').value,
+
+      upiRef: document.getElementById('regUpi').value
+
+    };
+
+    showStatus('ನೋಂದಣಿ ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ...', false);
+
+    const res = await apiCall('register', payload);
+
+    showStatus(res.message, !res.success);
+
+  }
+
+ 
+
+  async function doLogin() {
+
+    const dise = document.getElementById('loginDise').value;
+
+    const pin = document.getElementById('loginPin').value;
+
+    showStatus('ಲಾಗಿನ್ ಆಗುತ್ತಿದೆ... ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ', false);
+
+    const res = await apiCall('login', { diseCode: dise, pin: pin });
+
+    if (!res.success) return showStatus(res.message, true);
+
+    document.getElementById('authScreen').style.display = 'none';
+
+    if (res.isAdmin) {
+
+      renderAdminPanel(res.schools);
+
+    } else {
+
+      CURRENT_SCHOOL = res.schoolInfo;
+
+      document.getElementById('mainApp').style.display = 'block';
+
+      document.getElementById('dispSchoolName').innerText = CURRENT_SCHOOL.schoolName;
+
+      document.getElementById('dispDise').innerText = CURRENT_SCHOOL.diseCode;
+
+      document.getElementById('dispCat').innerText = CURRENT_SCHOOL.category;
+
+      populateBasicForm(CURRENT_SCHOOL.basic);
+
+    }
+
+  }
+
+ 
+
+  function populateBasicForm(b) {
+
+    if (!b) return;
+
+    Object.keys(b).forEach(k => {
+
+      const el = document.getElementById('b_' + k);
+
+      if (el) el.value = b[k] || '';
+
+    });
+
+  }
+
+ 
+
+  async function saveProfile() {
+
+    const d = {};
+
+    ['schoolName','cluster','taluk','hobli','diseCode','enrol1to5','enrol6to8','bankAcc','ifsc','bankBranch','recipientId','fssi','crp','hm','mdmTeacher','totalCooks','headCook'].forEach(k => {
+
+      const el = document.getElementById('b_' + k);
+
+      if (el) d[k] = el.value;
+
+    });
+
+    showStatus('ಉಳಿಸಲಾಗುತ್ತಿದೆ...', false);
+
+    const res = await apiCall('saveBasic', { fileId: CURRENT_SCHOOL.fileId, data: d });
+
+    showStatus(res.message, !res.success);
+
+  }
+
+ 
+
+  async function submitDailySB() {
+
+    const entry = {
+
+      monthCode: document.getElementById('sbMonth').value,
+
+      daySlot: document.getElementById('sbSlot').value,
+
+      dateStr: document.getElementById('sbDate').value,
+
+      milkCount: document.getElementById('sbMilk').value,
+
+      mdm1to5: document.getElementById('sbMdm1').value,
+
+      mdm6to8: document.getElementById('sbMdm2').value,
+
+      ragiTick: document.getElementById('sbRagiTick').checked,
+
+      apfTick: document.getElementById('sbApfTick').checked,
+
+      wheatTick: document.getElementById('sbWheatTick').checked,
+
+      eggCount: document.getElementById('sbEgg').value,
+
+      bananaCount: document.getElementById('sbBanana').value,
+
+      chikkiCount: document.getElementById('sbChikki').value,
+
+      hasSupply: document.getElementById('toggleSupply').checked,
+
+      supRice1to5: document.getElementById('supRice1').value,
+
+      supRice6to8: document.getElementById('supRice2').value,
+
+      supWheat1to5: document.getElementById('supWheat1').value,
+
+      supWheat6to8: document.getElementById('supWheat2').value,
+
+      supDal1to5: document.getElementById('supDal1').value,
+
+      supDal6to8: document.getElementById('supDal2').value,
+
+      supOil1to5: document.getElementById('supOil1').value,
+
+      supOil6to8: document.getElementById('supOil2').value,
+
+      supMilk: document.getElementById('supMilk').value,
+
+      supRagi: document.getElementById('supRagi').value,
+
+      gasDetails: document.getElementById('gasDetails').value,
+
+      gasCount: document.getElementById('gasCount').value
+
+    };
+
+    showStatus('ದಾಸ್ತಾನು ವಹಿ ಉಳಿಸಲಾಗುತ್ತಿದೆ...', false);
+
+    const res = await apiCall('saveSB', { fileId: CURRENT_SCHOOL.fileId, entry: entry });
+
+    showStatus(res.message, !res.success);
+
+  }
+
+ 
+
+  async function submitCashBook() {
+
+    const cb = {
+
+      monthCode: document.getElementById('cbMonth').value,
+
+      entryType: document.getElementById('cbType').value,
+
+      blockNum: document.getElementById('cbBlock').value,
+
+      dateStr: document.getElementById('cbDate').value,
+
+      particulars: document.getElementById('cbPart').value,
+
+      veg1to5: document.getElementById('cbVeg1').value,
+
+      veg6to8: document.getElementById('cbVeg2').value,
+
+      fuel: document.getElementById('cbFuel').value,
+
+      transport: document.getElementById('cbTrans').value,
+
+      ksSugar: document.getElementById('cbKsSug').value,
+
+      ksOther: document.getElementById('cbKsOth').value,
+
+      ksFuel: document.getElementById('cbKsFuel').value,
+
+      dseEgg: document.getElementById('cbDse').value,
+
+      apfEgg: document.getElementById('cbApf').value,
+
+      otherGrant: document.getElementById('cbOthG').value,
+
+      bankInterest: document.getElementById('cbInt').value,
+
+      bagSale: document.getElementById('cbBag').value
+
+    };
+
+    showStatus('ನಗದು ವಹಿ ಉಳಿಸಲಾಗುತ್ತಿದೆ...', false);
+
+    const res = await apiCall('saveCB', { fileId: CURRENT_SCHOOL.fileId, cb: cb });
+
+    showStatus(res.message, !res.success);
+
+  }
+
+ 
+
+  function downloadReport(docType) {
+
+    const m = document.getElementById('pdfMonth').value;
+
+    triggerPdfDownload(m + '-' + docType);
+
+  }
+
+ 
+
+  function downloadAnnualUC() {
+
+    triggerPdfDownload('ANNUAL -UC');
+
+  }
+
+ 
+
+  async function triggerPdfDownload(sheetName) {
+
+    showStatus(sheetName + ' PDF ಸಿದ್ಧವಾಗುತ್ತಿದೆ...', false);
+
+    const res = await apiCall('getPDF', { fileId: CURRENT_SCHOOL.fileId, sheetName: sheetName });
+
+    if (!res.success) return showStatus(res.message, true);
+
+    const link = document.createElement('a');
+
+    link.href = 'data:application/pdf;base64,' + res.base64;
+
+    link.download = res.fileName;
+
+    link.click();
+
+    showStatus(res.fileName + ' ಡೌನ್‌ಲೋಡ್ ಆಗಿದೆ!', false);
+
+  }
+
+ 
+
+  function renderAdminPanel(schools) {
+
+    document.getElementById('adminScreen').style.display = 'block';
+
+    let html = '<table class="table table-bordered table-sm"><thead><tr><th>DISE</th><th>School</th><th>Phone/UPI</th><th>Status</th><th>Action</th><th>Sheet</th></tr></thead><tbody>';
+
+    schools.forEach(s => {
+
+      html += `<tr>
+
+        <td>${s.diseCode}<br><span class="badge bg-secondary">PIN: ${s.pin}</span></td>
+
+        <td>${s.schoolName} (${s.category})</td>
+
+        <td>${s.phone}<br><small>${s.upiRef}</small></td>
+
+        <td><strong>${s.status}</strong></td>
+
+        <td>
+
+          <button class="btn btn-xs btn-success btn-sm" onclick="setStatus('${s.diseCode}','ACTIVE')">Approve</button>
+
+          <button class="btn btn-xs btn-danger btn-sm" onclick="setStatus('${s.diseCode}','BLOCKED')">Block</button>
+
+        </td>
+
+        <td>${s.fileUrl ? `<a href="${s.fileUrl}" target="_blank" class="btn btn-sm btn-outline-primary">Open Sheet</a>` : 'Pending'}</td>
+
+      </tr>`;
+
+    });
+
+    html += '</tbody></table>';
+
+    document.getElementById('adminTableWrap').innerHTML = html;
+
+  }
+
+ 
+
+  async function setStatus(dise, status) {
+
+    const res = await apiCall('adminUpdateStatus', { diseCode: dise, status: status });
+
+    alert(res.message);
+
+    doLogin();
+
+  }
+
+</script>
+
+</body>
+
+</html>
+
+Const API_URL= "https://script.google.com/macros/s/AKfycby0y7CWCrMNlyX3tp1kWR_NJCTtAKPm_flr2H9tRjqSZHw2E2A0XGMSXo9aqwaZikXQ/exec";
